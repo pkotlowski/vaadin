@@ -9,6 +9,7 @@ package com.example.vaadindemo;
 import com.example.vaadindemo.domain.Item;
 import com.example.vaadindemo.domain.Person;
 import com.example.vaadindemo.domain.ShoppingList;
+import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -32,7 +33,7 @@ public class AddItemPanel {
         final HorizontalLayout x = new HorizontalLayout();
         x.setId("addItemPanel");
         Button persistNewItemButton = new Button("Dodaj");
-        Item item = new Item();
+        final Item item = new Item();
 		BeanItem<Item> personBean = new BeanItem<Item>(item);
 		
 		final FormLayout formLayout = new FormLayout();
@@ -62,26 +63,36 @@ public class AddItemPanel {
     //container.addItem(new Planet(4, "Mars"));
 
     // Create a selection component bound to the container
-    ComboBox select = new ComboBox("Planets", container);
+    final ComboBox select = new ComboBox("Planets", container);
 
     // Set the caption mode to read the caption directly
     // from the 'name' property of the bean
     select.setItemCaptionMode(ItemCaptionMode.PROPERTY);
     select.setItemCaptionPropertyId("name");
-                
-                
-                
+          select.setImmediate(true);
+    final Label ldd = new Label();
+    
                 
         x.addComponent(select);
         x.addComponent(formLayout);
         x.addComponent(persistNewItemButton);
-        
+        x.addComponent(ldd);
         persistNewItemButton.addClickListener(new Button.ClickListener() {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Label l = new Label("jsdcbsc");
                 x.addComponent(l);
+                //ldd.setValue(select.getItem(item.firstName).toString());
+            }
+        });
+      
+        select.addValueChangeListener(new Property.ValueChangeListener() {
+
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+               
+               ldd.setValue(select.getItemCaption(event.getProperty().getValue()));
             }
         });
         return x;
