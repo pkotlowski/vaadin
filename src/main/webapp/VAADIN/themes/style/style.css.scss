@@ -1,0 +1,19 @@
+/* Import the reindeer theme. */
+/* This only allows us to use the mixins defined in it and does not add any styles by itself. */
+@import "../reindeer/reindeer.scss";
+
+/* This contains all of your theme. */
+/* If somebody wants to extend the theme she will include this mixin. */
+@mixin style {
+    /* Include all the styles from the reindeer theme */
+    @include reindeer;
+ 
+    #menuPanel{
+        alignment-adjust: central;
+        background-color: background;
+    }
+    .v-verticallayout v-layout v-vertical v-widget v-has-width v-has-height{
+        background-color: background;
+    }
+    /* Insert your theme rules here */
+}
